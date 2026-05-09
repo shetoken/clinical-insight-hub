@@ -10,6 +10,8 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
 export default defineConfig({
   tanstackStart: {
+    router: { basepath: process.env.GITHUB_PAGES === "true" ? "/clinical-insight-hub" : "/" },
+    client: { base: process.env.GITHUB_PAGES === "true" ? "/clinical-insight-hub/_build" : "/_build" },
     server: { entry: "server" },
   },
 });

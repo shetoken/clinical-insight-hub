@@ -50,7 +50,9 @@ jobs:
             echo "No build output folder found" >&2
             exit 1
           fi
-          if [ ! -f site/index.html ] && [ -f site/_shell/index.html ]; then
+          if [ ! -f site/index.html ] && [ -f site/_shell.html ]; then
+            cp site/_shell.html site/index.html
+          elif [ ! -f site/index.html ] && [ -f site/_shell/index.html ]; then
             cp site/_shell/index.html site/index.html
           fi
           if [ ! -f site/index.html ]; then
@@ -58,6 +60,7 @@ jobs:
             ls -la site
             exit 1
           fi
+          cp site/index.html site/404.html
           touch site/.nojekyll
 
       - name: Configure Pages

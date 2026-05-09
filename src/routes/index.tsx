@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
   component: App,
   head: () => ({
     meta: [
-      { title: "CenterWell · Clinical AI" },
+      { title: "Homefield · Clinical AI" },
       { name: "description", content: "Clinical AI platform for home health — wound assessment, ACH risk, care plans, note QA, escalation, and discharge readiness." },
     ],
   }),
@@ -140,7 +140,7 @@ function Landing({ onSignup, onLogin }) {
           <div className="flex items-center gap-3">
             <Glyph />
             <div>
-              <div className="font-display text-lg leading-none" style={{ fontWeight: 600 }}>CenterWell</div>
+              <div className="font-display text-lg leading-none" style={{ fontWeight: 600 }}>Homefield</div>
               <div className="tag" style={{ color: "var(--ink-3)" }}>Clinical AI · Home Health</div>
             </div>
           </div>
@@ -162,7 +162,7 @@ function Landing({ onSignup, onLogin }) {
             clinician trust.
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed" style={{ color: "var(--ink-2)" }}>
-            CenterWell Home Health's clinical AI platform turns six high-friction moments — wound assessment,
+            Homefield Home Health's clinical AI platform turns six high-friction moments — wound assessment,
             30-day ACH risk, care plans, note QA, ED escalation, discharge readiness — into cited,
             evidence-backed drafts. Nurses still decide. The AI just removes friction and surfaces the cohort.
           </p>
@@ -291,7 +291,7 @@ function Landing({ onSignup, onLogin }) {
       </section>
 
       <footer className="px-6 py-10 text-xs flex items-center justify-between max-w-7xl mx-auto" style={{ color: "var(--ink-3)" }}>
-        <div>CenterWell Home Health · Clinical AI Platform · Confidential — for evaluation only</div>
+        <div>Homefield Home Health · Clinical AI Platform · Confidential — for evaluation only</div>
         <div>v0.4 · {new Date().getFullYear()}</div>
       </footer>
     </div>
@@ -400,7 +400,7 @@ function AuthScreen({ mode, onDone, onSwitch, onBack }) {
         <div className="relative z-10 p-14 flex flex-col justify-between w-full">
           <div className="flex items-center gap-3">
             <Glyph />
-            <div className="font-display" style={{ fontWeight: 600 }}>CenterWell · Clinical AI</div>
+            <div className="font-display" style={{ fontWeight: 600 }}>Homefield · Clinical AI</div>
           </div>
           <div>
             <div className="kicker mb-5" style={{ color: "var(--gold)" }}>Pattern 02</div>
@@ -454,7 +454,7 @@ function AuthScreen({ mode, onDone, onSwitch, onBack }) {
               </>
             )}
             <Field label="Email" icon={Mail}>
-              <input className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@centerwell.com" autoFocus />
+              <input className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@homefield.com" autoFocus />
             </Field>
             <Field label="Password" icon={Lock}>
               <input className="input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters" />
@@ -521,7 +521,7 @@ function Dashboard({ user, onSignOut }) {
         <div className="p-5 border-b flex items-center gap-3" style={{ borderColor: "var(--line)" }}>
           <Glyph />
           <div>
-            <div className="font-display text-sm" style={{ fontWeight: 600 }}>CenterWell</div>
+            <div className="font-display text-sm" style={{ fontWeight: 600 }}>Homefield</div>
             <div className="text-[10px] tag" style={{ color: "var(--ink-3)" }}>Clinical AI Demo</div>
           </div>
         </div>
@@ -761,7 +761,7 @@ function AchDemo() {
     { name: "BP elevation (158/92, ↑ from 142/86)", val: 0.064, ev: "Today's visit vitals" },
     { name: "Dyspnea pattern (mild, on exertion)", val: 0.041, ev: "Bio_ClinicalBERT note features" },
     { name: "HFrEF + DM2 + CKD-3 stack", val: 0.038, ev: "OASIS-E + ICD-10" },
-    { name: "Loop diuretic adherence drop", val: 0.029, ev: "CenterWell Pharmacy PDC last 30d" },
+    { name: "Loop diuretic adherence drop", val: 0.029, ev: "Homefield Pharmacy PDC last 30d" },
   ];
 
   return (
@@ -1133,7 +1133,7 @@ function EscalationDemo() {
           <div className="text-sm" style={{ color: "var(--ink-3)" }}>Female · 76 · CHF + AFib</div>
           <div className="my-5 divider-dotted h-px" />
           <div className="text-sm leading-relaxed" style={{ color: "var(--ink-2)" }}>
-            HFrEF, atrial fibrillation on warfarin, mild cognitive impairment. Lives alone with daily check-ins from son (20 min away). On home health 5 weeks. Robert, RN-CM, oversees her care. Dr. Patel, CenterWell PCP.
+            HFrEF, atrial fibrillation on warfarin, mild cognitive impairment. Lives alone with daily check-ins from son (20 min away). On home health 5 weeks. Robert, RN-CM, oversees her care. Dr. Patel, Homefield PCP.
           </div>
           <div className="my-5 divider-dotted h-px" />
           {phase === 0 ? (
@@ -1145,7 +1145,7 @@ function EscalationDemo() {
           )}
           <div className="mt-6 p-3 text-xs" style={{ background: "rgba(184,85,61,0.06)" }}>
             <div className="tag mb-1" style={{ color: "var(--rust)" }}>WITHOUT HG</div>
-            CenterWell wouldn't know Dorothy went to an external ED for days (claims) or weeks (paper trail). With HG ADT alerts: minutes.
+            Homefield wouldn't know Dorothy went to an external ED for days (claims) or weeks (paper trail). With HG ADT alerts: minutes.
           </div>
         </div>
 
@@ -1160,7 +1160,7 @@ function EscalationDemo() {
           <div className="card p-6">
             <div className="tag mb-3" style={{ color: "var(--rust)" }}>EVIDENCE PACKET · CASE MANAGER PAGE</div>
             <div className="space-y-3 text-sm">
-              <div><div className="tag mb-1" style={{ color: "var(--ink-3)" }}>FACILITY</div><div>Riverside Community Hospital · ED · 3:12 PM (NOT in Humana network)</div></div>
+              <div><div className="tag mb-1" style={{ color: "var(--ink-3)" }}>FACILITY</div><div>Riverside Community Hospital · ED · 3:12 PM (NOT in payer network)</div></div>
               <div><div className="tag mb-1" style={{ color: "var(--ink-3)" }}>CHIEF COMPLAINT (HG)</div><div>Shortness of breath · ankle edema</div></div>
               <div><div className="tag mb-1" style={{ color: "var(--ink-3)" }}>RISK RE-SCORE</div><div>0.61 (was 0.34) — above panel threshold (0.50). Drivers: ext_ed_visit_count_30d +1, weight + diuretic adherence trends.</div></div>
               <div><div className="tag mb-1" style={{ color: "var(--ink-3)" }}>SIMILAR PATIENTS POST-ED (NEO4J COHORT)</div><div>Cohort N=64 with same CHF+AFib post-ED profile · 41% had readmission within 30d unless tele-PCP visit + diuretic titration occurred within 48h.</div></div>
@@ -1172,7 +1172,7 @@ function EscalationDemo() {
               <ActionRow icon={Stethoscope} t="Tele-PCP visit booked" sub="With Dr. Patel · within 24h" status={phase >= 6 ? "done" : "pending"} />
               <ActionRow icon={Heart} t="HHA visit increased" sub="Within 24h on-site" status={phase >= 6 ? "done" : "pending"} />
               <ActionRow icon={Pill} t="Pharmacy med rec triggered" sub="Discharge summary pulled via HG" status={phase >= 6 ? "done" : "pending"} />
-              <ActionRow icon={ShieldCheck} t="PCP follow-up note ready" sub="Discharge summary in CenterWell inbox — not via mail days later" status={phase >= 6 ? "done" : "pending"} />
+              <ActionRow icon={ShieldCheck} t="PCP follow-up note ready" sub="Discharge summary in Homefield inbox — not via mail days later" status={phase >= 6 ? "done" : "pending"} />
             </div>
             {phase >= 6 && (
               <div className="mt-5 p-3 text-xs fadeInUp" style={{ background: "rgba(31,71,66,0.06)", borderLeft: "2px solid var(--forest)" }}>
@@ -1188,9 +1188,9 @@ function EscalationDemo() {
 
 function EscalationTimeline({ phase }) {
   const steps = [
-    { t: "2:47 PM", h: "Dorothy calls son · trouble breathing", sub: "Son drives her to nearest ED (NOT Humana network)" },
+    { t: "2:47 PM", h: "Dorothy calls son · trouble breathing", sub: "Son drives her to nearest ED (NOT payer network)" },
     { t: "3:12 PM", h: "ED registration · Riverside Community", sub: "Triage starts" },
-    { t: "3:14 PM", h: "Health Gorilla ADT alert fires", sub: "Webhook to CenterWell within minutes of registration" },
+    { t: "3:14 PM", h: "Health Gorilla ADT alert fires", sub: "Webhook to Homefield within minutes of registration" },
     { t: "3:14 PM", h: "Risk re-score: 0.34 → 0.61", sub: "ext_ed_visit_count_30d += 1; threshold breach" },
     { t: "3:15 PM", h: "Escalation agent assembles evidence packet", sub: "SHAP drivers + cohort interventions + CATE estimates" },
     { t: "3:16 PM", h: "Case manager paged via PagerDuty", sub: "Robert, RN-CM, calls Dorothy + son" },

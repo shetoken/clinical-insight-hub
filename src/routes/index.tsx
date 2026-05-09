@@ -84,7 +84,7 @@ const safeGet = (k) => { try { return localStorage.getItem(k); } catch { return 
 const safeSet = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
 const safeDel = (k) => { try { localStorage.removeItem(k); } catch {} };
 
-function App() {
+export function App() {
   const [view, setView] = useState("landing");
   const [user, setUser] = useState(null);
   const [bootLoaded, setBootLoaded] = useState(false);

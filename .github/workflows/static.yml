@@ -33,50 +33,24 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Build
-        run: bun run build
-        env:
-          GITHUB_PAGES: "true"
+        run: bun run build:github-pages
 
       - name: Prepare Pages artifact
         run: |
           mkdir -p site
-          if [ -d dist/client ]; then
-            cp -R dist/client/. site
-          elif [ -d dist/public ]; then
-            cp -R dist/public/. site
-          elif [ -d dist ]; then
-            cp -R dist/. site
+          if [ -d dist/github-pages ]; then
+            cp -R dist/github-pages/. site
           else
             echo "No build output folder found" >&2
             exit 1
           fi
-          if [ ! -f site/index.html ] && [ -f site/_shell.html ]; then
-            cp site/_shell.html site/index.html
-          elif [ ! -f site/index.html ] && [ -f site/_shell/index.html ]; then
-            cp site/_shell/index.html site/index.html
+          if [ -f site/github-pages.html ] && [ ! -f site/index.html ]; then
+            mv site/github-pages.html site/index.html
           fi
           if [ ! -f site/index.html ]; then
-            entry_js="$(find site -path '*/assets/*.js' -type f | head -n 1 | sed 's#^site##')"
-            stylesheet="$(find site -path '*/assets/*.css' -type f | head -n 1 | sed 's#^site##')"
-            if [ -z "$entry_js" ]; then
-              echo "No client JavaScript bundle found" >&2
-              find site -maxdepth 3 -type f | sort
-              exit 1
-            fi
-            cat > site/index.html <<EOF
-          <!doctype html>
-          <html lang="en">
-            <head>
-              <meta charset="utf-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1" />
-              <title>Clinical Insight Hub</title>
-              ${stylesheet:+<link rel="stylesheet" href="/clinical-insight-hub$stylesheet" />}
-            </head>
-            <body>
-              <script type="module" src="/clinical-insight-hub$entry_js"></script>
-            </body>
-          </html>
-          EOF
+            echo "No index.html found in Pages artifact" >&2
+            find site -maxdepth 3 -type f | sort
+            exit 1
           fi
           cp site/index.html site/404.html
           touch site/.nojekyll

@@ -56,9 +56,27 @@ jobs:
             cp site/_shell/index.html site/index.html
           fi
           if [ ! -f site/index.html ]; then
-            echo "No index.html found in Pages artifact" >&2
-            ls -la site
-            exit 1
+            entry_js="$(find site -path '*/assets/*.js' -type f | head -n 1 | sed 's#^site##')"
+            stylesheet="$(find site -path '*/assets/*.css' -type f | head -n 1 | sed 's#^site##')"
+            if [ -z "$entry_js" ]; then
+              echo "No client JavaScript bundle found" >&2
+              find site -maxdepth 3 -type f | sort
+              exit 1
+            fi
+            cat > site/index.html <<EOF
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <title>Clinical Insight Hub</title>
+              ${stylesheet:+<link rel="stylesheet" href="/clinical-insight-hub$stylesheet" />}
+            </head>
+            <body>
+              <script type="module" src="/clinical-insight-hub$entry_js"></script>
+            </body>
+          </html>
+          EOF
           fi
           cp site/index.html site/404.html
           touch site/.nojekyll

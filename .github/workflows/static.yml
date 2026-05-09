@@ -1,43 +1,62 @@
-# Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+          node-version: 20
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - name: Build static site
+        run: |
+          mkdir -p site
+          npx @tailwindcss/cli -i src/styles.css -o site/styles.css --minify
+          npx esbuild electron/entry.tsx \
+            --bundle --minify --format=iife \
+            --jsx=automatic \
+            --loader:.tsx=tsx --loader:.ts=ts \
+            --define:process.env.NODE_ENV='"production"' \
+            --outfile=site/app.js
+          cat > site/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Homefield · Clinical AI</title>
+            <link rel="stylesheet" href="./styles.css" />
+          </head>
+          <body style="margin:0;background:#F7F3EA">
+            <div id="root"></div>
+            <script src="./app.js"></script>
+          </body>
+          </html>
+          EOF
+          cp site/index.html site/404.html
+          touch site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'site'
+      - id: deployment
+        uses: actions/deploy-pages@v4

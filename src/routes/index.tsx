@@ -304,7 +304,7 @@ function HeroPanel() {
       <div className="px-5 py-3 flex items-center justify-between border-b" style={{ borderColor: "var(--line)" }}>
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full" style={{ background: "var(--mint)" }} />
-          <div className="text-xs" style={{ color: "var(--ink-3)" }}>HCHB · PointCare sidebar</div>
+          <div className="text-xs" style={{ color: "var(--ink-3)" }}>Home Health EMR · PointCare sidebar</div>
         </div>
         <div className="tag" style={{ color: "var(--ink-3)" }}>visit-time · ~30s</div>
       </div>
@@ -621,7 +621,7 @@ function WoundDemo() {
 
   return (
     <DemoFrame title="Wound photo classification" kicker="Use case 01 · Q1 · Visit-time (~30s) · Field nurse"
-      blurb="Path B: cloud LLM via webhook (Gemini 2.5 Pro vision, BAA-covered on Vertex). Sarah, RN, captures the wound at Margaret's bedside; ~30 seconds later, an NPUAP-staged draft lands in her HCHB sidebar. Override rate target: 10–15%.">
+      blurb="Path B: cloud LLM via webhook (Gemini 2.5 Pro vision, BAA-covered on Vertex). Sarah, RN, captures the wound at Margaret's bedside; ~30 seconds later, an NPUAP-staged draft lands in her EMR sidebar. Override rate target: 10–15%.">
       <div className="grid lg:grid-cols-12 gap-6">
         <div className="lg:col-span-4 card p-6">
           <div className="tag mb-2" style={{ color: "var(--rust)" }}>PATIENT</div>
@@ -639,12 +639,12 @@ function WoundDemo() {
           <div className="my-5 divider-dotted h-px" />
           <div className="text-xs" style={{ color: "var(--ink-3)" }}>
             <div className="tag mb-1.5" style={{ color: "var(--rust)" }}>BEHIND THE SCENES</div>
-            Photo → Azure Function strips EXIF + face-blur → Gemini 2.5 Pro vision → Pydantic-typed output → HCHB FHIR write-back as DocumentReference + Observation.
+            Photo → Azure Function strips EXIF + face-blur → Gemini 2.5 Pro vision → Pydantic-typed output → EMR FHIR write-back as DocumentReference + Observation.
           </div>
         </div>
 
         <div className="lg:col-span-4 card p-6 flex flex-col">
-          <div className="tag mb-3" style={{ color: "var(--rust)" }}>HCHB POINTCARE · CAPTURE</div>
+          <div className="tag mb-3" style={{ color: "var(--rust)" }}>HOME HEALTH EMR · CAPTURE</div>
           <div className="relative aspect-[4/5] rounded-sm overflow-hidden mb-4" style={{ background: "linear-gradient(135deg, #5a3530 0%, #3d2520 100%)" }}>
             <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 250" preserveAspectRatio="none">
               <defs>
@@ -875,7 +875,7 @@ function CarePlanDemo() {
     }
   }, [step]);
   const tools = [
-    { name: "HCHB FHIR", desc: "Fetch current plan, OASIS-E, comorbidities, meds, labs", color: "var(--forest)" },
+    { name: "EMR FHIR", desc: "Fetch current plan, OASIS-E, comorbidities, meds, labs", color: "var(--forest)" },
     { name: "Mosaic Vector Search", desc: "Top-K=100 similar discharged patients (digital twins)", color: "var(--rust)" },
     { name: "Neo4j Cypher", desc: "Interventions in twin cohort with healed outcomes", color: "var(--gold)" },
     { name: "Risk model", desc: "Score 30-day ACH (returns 0.18 — low baseline)", color: "var(--mint)" },
@@ -913,7 +913,7 @@ function CarePlanDemo() {
 
         <div className="lg:col-span-4 card p-6">
           <div className="tag mb-4" style={{ color: "var(--rust)" }}>AGENT · LANGGRAPH</div>
-          <TimelineStep n="01" t="HCHB FHIR webhook fires" sub="Mosaic AI Agent Bricks receives event" done={step >= 1} active={step === 1} />
+          <TimelineStep n="01" t="EMR FHIR webhook fires" sub="Mosaic AI Agent Bricks receives event" done={step >= 1} active={step === 1} />
           <TimelineStep n="02" t="Tool calls dispatched in parallel" sub={null} done={step >= 2} active={step === 2}>
             {step >= 2 && (
               <div className="ml-1 mt-2 space-y-1.5">
@@ -927,7 +927,7 @@ function CarePlanDemo() {
             )}
           </TimelineStep>
           <TimelineStep n="03" t="Synthesis & ranking" sub="Compare current plan vs cohort evidence; rank delta interventions by effect size" done={step >= 3} active={step === 3} />
-          <TimelineStep n="04" t="Recommendation rendered to HCHB sidebar" sub="Maria reviews; accept/edit/reject logged for retrain" done={step >= 4} active={false} last />
+          <TimelineStep n="04" t="Recommendation rendered to EMR sidebar" sub="Maria reviews; accept/edit/reject logged for retrain" done={step >= 4} active={false} last />
         </div>
 
         <div className="lg:col-span-4 card p-6">
@@ -1060,7 +1060,7 @@ function NoteQaDemo() {
         <div className="lg:col-span-5 card p-6">
           <div className="flex items-center justify-between mb-3">
             <div className="tag" style={{ color: "var(--rust)" }}>VISIT NARRATIVE</div>
-            <span className="text-xs" style={{ color: "var(--ink-3)" }}>HCHB · note draft</span>
+            <span className="text-xs" style={{ color: "var(--ink-3)" }}>Home Health EMR · note draft</span>
           </div>
           <textarea className="input" style={{ minHeight: 220, fontFamily: "Manrope", lineHeight: 1.6 }} value={note} onChange={(e) => setNote(e.target.value)} />
           <button onClick={run} disabled={running} className="btn-primary w-full py-3 mt-4 flex items-center justify-center gap-2 disabled:opacity-60" style={{ borderRadius: 2 }}>
@@ -1359,7 +1359,7 @@ function Row({ k, v, alert }: any) {
 }
 
 const USE_CASES = [
-  { id: "wound", title: "Wound photo classification", blurb: "Capture the wound. ~30s later, an NPUAP-staged draft with etiology, tissue %, exudate, and measurements appears in the HCHB chart sidebar.", persona: "Margaret K., 78", quarter: "Q1", tier: "Visit-time · ~30s", override: "10–15%", icon: Camera, tint: "rgba(184,85,61,0.1)", fg: "var(--rust)" },
+  { id: "wound", title: "Wound photo classification", blurb: "Capture the wound. ~30s later, an NPUAP-staged draft with etiology, tissue %, exudate, and measurements appears in the EMR chart sidebar.", persona: "Margaret K., 78", quarter: "Q1", tier: "Visit-time · ~30s", override: "10–15%", icon: Camera, tint: "rgba(184,85,61,0.1)", fg: "var(--rust)" },
   { id: "ach", title: "30-day ACH risk + drivers", blurb: "After SOC save, an XGBoost+DeepSurv ensemble returns probability with SHAP-decomposed drivers and a Claude-authored case manager narrative.", persona: "Robert T., 82", quarter: "Q1", tier: "Visit-time · 30–90s", override: "5–10%", icon: Activity, tint: "rgba(31,71,66,0.1)", fg: "var(--forest)" },
   { id: "noteqa", title: "Visit note completeness QA", blurb: "On Save, a single LLM call cross-checks the note against OASIS-E expected items for the diagnosis cluster. Inline flag, one-click 'Add'.", persona: "James W., 88", quarter: "Q1", tier: "Real-time · <2s", override: "10–20%", icon: FileText, tint: "rgba(200,155,63,0.12)", fg: "var(--gold)" },
   { id: "careplan", title: "Care plan recommendations", blurb: "Five tools in parallel — FHIR, vector twins, Neo4j, risk model, DoWhy CATE. Output: Continue / Add / Revise with cohort N + CATE per recommendation.", persona: "Eleanor V., 71", quarter: "Q2", tier: "Visit-time · 60–90s", override: "30–40%", icon: Clipboard, tint: "rgba(111,163,145,0.18)", fg: "var(--mint)" },

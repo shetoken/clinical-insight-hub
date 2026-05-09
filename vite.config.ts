@@ -12,7 +12,6 @@ export default defineConfig({
   tanstackStart: {
     router: { basepath: process.env.GITHUB_PAGES === "true" ? "/clinical-insight-hub" : "/" },
     client: { base: process.env.GITHUB_PAGES === "true" ? "/clinical-insight-hub/_build" : "/_build" },
-    spa: { enabled: process.env.GITHUB_PAGES === "true" },
     server: { entry: "server" },
   },
 });
